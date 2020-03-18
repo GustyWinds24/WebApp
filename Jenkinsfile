@@ -105,6 +105,7 @@ node {
     }
 
     stage('Build sanity-test-production') {
+        slackSend channel: '#devops', message: 'sanity-test-production - Started by upstream project "production-deployment"'
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             sh 'mvn -f Acceptancetest/pom.xml test'
         }

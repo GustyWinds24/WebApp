@@ -7,7 +7,7 @@ node {
         mvnHome = 'maven 3.3.9'
     }
 
-	/*stage('Edit URL IPs') {
+	stage('Edit URL IPs') {
         // DB IP address change
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/cancelpage.java"
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/createpage.java"
@@ -27,7 +27,7 @@ node {
         sh "git commit -m 'Pushing IP edited files'"
         sh 'git push https://GustyWinds24:DangerousToUse123@github.com/GustyWinds24/WebApp.git'
         //sh 'git pull'
-    }*/
+    }
 
     stage('Clone sources') {
         git url: 'https://github.com/GustyWinds24/WebApp.git'
@@ -96,9 +96,9 @@ node {
     }
 
 	// Here is where blazemeter is invoked
-	/*stage('Build performance-testing') {
+	stage('Build performance-testing') {
         blazeMeterTest credentialsId: 'blazemeterkey', testId: '7814049.taurus', workspaceId: '454266'
-    }*/
+    }
 	
     stage('Build production-deployment') {
         deploy adapters: [tomcat7(credentialsId: 'tomcatid', path: '', url: 'http://3.12.197.50:8080/')], contextPath: '/ProdWebapp', war: '**/*.war'

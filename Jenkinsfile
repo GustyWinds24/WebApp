@@ -36,7 +36,7 @@ node {
     stage('Create static-code-analysis job') { 
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             withSonarQubeEnv(credentialsId: 'sonarqubetoken', installationName: 'SonarQube') {
-                sh 'mvn clean "package" "sonar:sonar" -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=admin -Dsonar.password=admin'
+                sh 'mvn clean "package" "sonar:sonar" -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.sources=. -Dsonar.tests=. -Dsonar.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.test.exclusions=**/test/java/servlet/createpage_junit.java -Dsonar.login=admin -Dsonar.password=admin'
            }
         }
     }

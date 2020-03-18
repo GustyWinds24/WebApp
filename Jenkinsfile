@@ -130,7 +130,7 @@ node {
         dockerImage = dcoker.build repo + ":$BUILD_NUMBER"
     }
 
-    stage('Deploy image) {
+    stage('Deploy image') {
         docker.withRegistry( '', registryCredential) {
             dockerImage.push()
         }

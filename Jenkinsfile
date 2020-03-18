@@ -121,7 +121,7 @@ node {
     }
 
 	environment {
-        repo = "tcsilptg/nodejswebapp_team2_test2"
+        repo = "tcsilptg/nodejswebapp_team2_test1"
         registryCredential = 'tcsilptgid'
         dockerImage = ''
     }
@@ -132,7 +132,7 @@ node {
         }        
     }
 
-    /*stage('Build image') {
+    stage('Build image') {
         dockerImage = docker.build repo + ":$BUILD_NUMBER"
     }
 
@@ -140,7 +140,7 @@ node {
         docker.withRegistry( '', registryCredential) {
             dockerImage.push()
         }
-    }*/
+    }
 
 
     }

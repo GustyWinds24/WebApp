@@ -41,17 +41,29 @@ node {
         }
     }
 
+    def buildInfo
+
+	stage('Build compile-web-app') {
+        withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
+            sh 'mvn -f pom.xml compile'
+        }
+    }
+
+	stage('Publish compile-web-app build info') {
+        server.publishBuildInfo buildInfo
+    }
+
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server "tgdevops.jfrog.io"
     // Create an Artifactory Maven instance.
     def rtMaven = Artifactory.newMavenBuild()
-    def buildInfo
+    
     
     rtMaven.tool = "maven"
 
-    stage('Clone sources') {
+    /*stage('Clone sources') {
         git url: 'https://github.com/GustyWinds24/WebApp.git'
-    }
+    }*/
 
     stage('Artifactory configuration') {
         // Tool name from Jenkins configuration

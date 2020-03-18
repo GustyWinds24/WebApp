@@ -49,6 +49,10 @@ node {
         }
     }
 
+	stage('deploy-to-qa') {
+        deploy adapters: [tomcat7(credentialsId: 'tomcatid', path: '', url: 'http://3.21.122.98:8080/')], contextPath: '/QAWebapp', war: '**/*.war'
+    }
+
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server "tgdevops.jfrog.io"
     // Create an Artifactory Maven instance.

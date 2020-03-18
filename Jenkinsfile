@@ -110,5 +110,32 @@ node {
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '\\Acceptancetest\\target\\surefire-reports\\', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
     }
 
+    stage('Clone sources') {
+        git url: 'https://github.com/GustyWinds24/docker-demo.git'
+    }
+
+	environment {
+        repo = "tcsilptg/nodejswebapp_team2_test2"
+        registryCredential = 'tcsilptgid'
+        dockerImage = ''
+    }
+
+    stage('Build nodejs-app') {
+        nodejs('nodejs') {
+            sh 'npm install'
+        }        
+    }
+
+    stage('Build image') {
+        dockerImage = dcoker.build repo + ":$BUILD_NUMBER"
+    }
+
+    stage('Deploy image) {
+        docker.withRegistry( '', registryCredential) {
+            dockerImage.push()
+        }
+    }
+
+
     }
 	 

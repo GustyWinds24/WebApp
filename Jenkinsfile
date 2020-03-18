@@ -109,6 +109,7 @@ node {
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             sh 'mvn -f Acceptancetest/pom.xml test'
         }
+        slackSend channel: '#devops', message: 'sanity-test-production - Success'
     }
 
 	stage('Publish sanity test HTML reports') {
@@ -131,7 +132,7 @@ node {
         }        
     }
 
-    stage('Build image') {
+    /*stage('Build image') {
         dockerImage = docker.build repo + ":$BUILD_NUMBER"
     }
 
@@ -139,7 +140,7 @@ node {
         docker.withRegistry( '', registryCredential) {
             dockerImage.push()
         }
-    }
+    }*/
 
 
     }

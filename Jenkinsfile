@@ -1,13 +1,13 @@
 
 node {
-    /*def mvnHome
+    def mvnHome
 
 	stage('Preparation') {
         git url: 'https://github.com/GustyWinds24/WebApp.git', credentialsId: 'GitHubLogin'
         mvnHome = 'maven 3.3.9'
-    }*/
+    }
 
-	/*stage('Edit URL IPs') {
+	stage('Edit URL IPs') {
         // DB IP address change
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/cancelpage.java"
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/createpage.java"
@@ -27,7 +27,7 @@ node {
         sh "git commit -m 'Pushing IP edited files'"
         sh 'git push https://GustyWinds24:DangerousToUse123@github.com/GustyWinds24/WebApp.git'
         //sh 'git pull'
-    }*/
+    }
 
     stage('Clone sources') {
         git url: 'https://github.com/GustyWinds24/WebApp.git'

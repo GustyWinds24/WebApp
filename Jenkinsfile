@@ -127,7 +127,7 @@ node {
     }
 
     stage('Build image') {
-        dockerImage = dcoker.build repo + ":$BUILD_NUMBER"
+        dockerImage = docker.build repo + ":$BUILD_NUMBER"
     }
 
     stage('Deploy image') {

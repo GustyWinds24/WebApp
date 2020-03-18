@@ -49,10 +49,6 @@ node {
         }
     }
 
-	stage('Publish compile-web-app build info') {
-        server.publishBuildInfo buildInfo
-    }
-
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server "tgdevops.jfrog.io"
     // Create an Artifactory Maven instance.

@@ -49,8 +49,18 @@ node {
         }
     }
 
-	stage('deploy-to-qa') {
+	stage('build deploy-to-qa') {
         deploy adapters: [tomcat7(credentialsId: 'tomcatid', path: '', url: 'http://3.21.122.98:8080/')], contextPath: '/QAWebapp', war: '**/*.war'
+    }
+
+	stage('build functional-testing') {
+        withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
+            sh 'mvn -f functionaltest/pom.xml test'
+        }
+    }
+
+    stage('Publish HTML reports') {
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '\\functionaltest\\target\\surefire-reports\\', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
     }
 
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.

@@ -91,6 +91,12 @@ node {
         server.publishBuildInfo buildInfo
     }
 
+	// Here is where blazemeter is invoked
+	stage('Build performance-testing') {
+        blazeMeterTest credentialsId: 'blazemeterkey', testId: '7814049.taurus', workspaceId: '454266'
+    }
 	
+    
+
     }
 	 

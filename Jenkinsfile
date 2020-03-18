@@ -33,6 +33,10 @@ node {
         git url: 'https://github.com/GustyWinds24/WebApp.git'
     }
 
+    stage('Build triggers') {
+        properties([[$class: 'JiraProjectProperty'], pipelineTriggers([pollSCM('H/2 * * * *')])])
+    }
+
     stage('Build static-code-analysis job') { 
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             withSonarQubeEnv(credentialsId: 'sonarqubetoken', installationName: 'SonarQube') {

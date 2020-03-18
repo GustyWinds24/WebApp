@@ -59,7 +59,7 @@ node {
         }
     }
 
-    stage('Publish HTML reports') {
+    stage('Publish functional testing HTML reports') {
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '\\functionaltest\\target\\surefire-reports\\', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
     }
 
@@ -100,7 +100,15 @@ node {
         deploy adapters: [tomcat7(credentialsId: 'tomcatid', path: '', url: 'http://3.12.197.50:8080/')], contextPath: '/ProdWebapp', war: '**/*.war'
     }
 
-    
+    stage('Build sanity-test-production') {
+        withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
+            sh 'mvn -f Acceptancetest/pom.xml test'
+        }
+    }
+
+	stage('Publish sanity test HTML reports') {
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '\\Acceptancetest\\target\\surefire-reports\\', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+    }
 
     }
 	 

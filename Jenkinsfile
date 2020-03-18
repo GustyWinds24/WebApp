@@ -7,7 +7,7 @@ node {
         mvnHome = 'maven 3.3.9'
     }
 
-	stage('Edit URL IPs') {
+	/*stage('Edit URL IPs') {
         // DB IP address change
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/cancelpage.java"
         sh "sed -i -e 's/[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}/3.21.122.98/g' src/test/java/servlet/createpage.java"
@@ -27,27 +27,18 @@ node {
         sh "git commit -m 'Pushing IP edited files'"
         sh 'git push https://GustyWinds24:DangerousToUse123@github.com/GustyWinds24/WebApp.git'
         //sh 'git pull'
-    }
+    }*/
 
     stage('Clone sources') {
         git url: 'https://github.com/GustyWinds24/WebApp.git'
     }
 
-    stage('Create static-code-analysis job') { 
+    stage('Build static-code-analysis job') { 
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             withSonarQubeEnv(credentialsId: 'sonarqubetoken', installationName: 'SonarQube') {
                 sh 'mvn clean "package" "sonar:sonar" -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.sources=. -Dsonar.tests=. -Dsonar.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.test.exclusions=**/test/java/servlet/createpage_junit.java -Dsonar.login=admin -Dsonar.password=admin'
            }
         }
-    }
-
-    stage("Quality Gate"){
-           timeout(time: 1, unit: 'HOURS') {
-               def qg = waitForQualityGate()
-               if (qg.status != 'OK') {
-                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
-               }
-          }
     }
 
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.

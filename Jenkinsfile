@@ -33,10 +33,10 @@ node {
         git url: 'https://github.com/GustyWinds24/WebApp.git'
     }
 
-    /*stage('Create static-code-analysis job') { 
+    stage('Create static-code-analysis job') { 
         withEnv( ["PATH+MAVEN=${tool mvnHome}/bin"] ) {
             withSonarQubeEnv(credentialsId: 'sonarqubetoken', installationName: 'SonarQube') {
-                sh 'mvn clean "package" "sonar:sonar" -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=“admin” -Dsonar.password=“admin”'
+                sh 'mvn clean "package" "sonar:sonar" -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=admin -Dsonar.password=admin'
            }
         }
     }
@@ -48,7 +48,7 @@ node {
                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
                }
           }
-    }*/
+    }
 
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server "tgdevops.jfrog.io"

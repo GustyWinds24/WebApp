@@ -92,10 +92,14 @@ node {
     }
 
 	// Here is where blazemeter is invoked
-	stage('Build performance-testing') {
+	/*stage('Build performance-testing') {
         blazeMeterTest credentialsId: 'blazemeterkey', testId: '7814049.taurus', workspaceId: '454266'
-    }
+    }*/
 	
+    stage('Build production-deployment') {
+        deploy adapters: [tomcat7(credentialsId: 'tomcatid', path: '', url: 'http://3.12.197.50:8080/')], contextPath: '/ProdWebapp', war: '**/*.war'
+    }
+
     
 
     }
